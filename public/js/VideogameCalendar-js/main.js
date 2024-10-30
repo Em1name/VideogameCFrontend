@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const setUsernameButton = document.getElementById('set-username');
+    const setUsernameButton = document.getElementById('api/users/set-username');
 
     // Überprüfen, ob der Button vorhanden ist, bevor du den Event-Listener hinzufügst
     if (setUsernameButton) {
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Funktion zum Senden des Benutzernamens an den Server
 async function setUsername(username) {
-    const response = await fetch('/api/set-username', { // Passe diese URL an
+    const response = await fetch('/api/users/set-username', { // Passe diese URL an
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
