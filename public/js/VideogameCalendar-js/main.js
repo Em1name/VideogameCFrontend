@@ -1,18 +1,5 @@
 import { checkAuthStatus, fetchPosts, createPost, uploadProfilePicture, setUsername } from './api.js';
 
-// Überprüfen des Authentifizierungsstatus beim Laden der Seite
-window.onload = async () => {
-    const authStatus = await checkAuthStatus();
-    if (authStatus.isAuthenticated) {
-        console.log(`Willkommen, ${authStatus.email}!`);
-    } else {
-        console.log("Bitte melde dich an.");
-    }
-
-    const posts = await fetchPosts();
-    console.log(posts);
-};
-
 // Funktion zum Erstellen eines neuen Beitrags
 async function handleCreatePost() {
     const title = document.getElementById('post-title').value.trim();
@@ -40,7 +27,7 @@ async function handleCreatePost() {
 
 // Event Listener für das Formular hinzufügen
 document.querySelector('.post-form').addEventListener('submit', function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Verhindert das Standardverhalten
     handleCreatePost();
 });
 
@@ -83,15 +70,14 @@ function onSignIn(googleUser) {
 }
 
 // Ereignis-Listener für Google Login Button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const googleLoginButton = document.getElementById('.g_id_signin');
+document.addEventListener('DOMContentLoaded', () => {
+    const googleLoginButton = document.querySelector('.g_id_signin');
     googleLoginButton.addEventListener('click', function() {
         gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
             console.error('Error during sign in:', error);
         });
     });
 });
-
 
 // Event Listener für das Setzen des Benutzernamens
 document.getElementById('set-username').addEventListener('click', async function () {
@@ -112,5 +98,4 @@ document.getElementById('set-username').addEventListener('click', async function
 });
 
 // Aufrufen von onLoad, um die Google API zu laden
-init();
 onLoad();
