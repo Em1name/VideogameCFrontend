@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Login</title>
-    <meta name="google-signin-client_id" content="DEINE_CLIENT_ID.apps.googleusercontent.com">
+    <title>Login - Videospielkalender</title>
+    <link rel="stylesheet" href="./public/css/VideogameCalendar-css/styles.css">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="./public/js/VideogameCalendar-js/main.js" defer></script>
+    <meta name="google-signin-client_id" content="495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+        .login-container {
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1>Willkommen!</h1>
-    <div class="g_id_signin" data-type="standard"></div> <!-- Google Login Button -->
-</div>
+<header>
+    <h1>Videospielkalender</h1>
+</header>
+<main>
+    <div class="login-container">
+        <h2>Einloggen mit Google</h2>
+        <!-- Google Login Button -->
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
+    </div>
+</main>
 
 <script>
     // Funktion zum Einloggen mit Google
@@ -44,21 +66,25 @@
         });
     }
 
-    // Ereignis-Listener für Google Login Button
-    document.addEventListener('DOMContentLoaded', () => {
-        const googleLoginButton = document.querySelector('.g_id_signin');
-
-        // Überprüfen, ob das Element existiert
-        if (googleLoginButton) {
-            googleLoginButton.addEventListener('click', function() {
-                gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
-                    console.error('Error during sign in:', error);
+    // Ereignis-Listener für Google Login
+    function initGoogleSignIn() {
+        gapi.load('auth2', function() {
+            gapi.auth2.init({
+                client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com'
+            }).then(() => {
+                const googleSignInButton = document.querySelector('.g_id_signin');
+                googleSignInButton.addEventListener('click', () => {
+                    gapi.auth2.getAuthInstance().signIn().then(onSignIn);
                 });
             });
-        } else {
-            console.error('Google Login Button nicht gefunden.');
-        }
-    });
+        });
+    }
+
+    // Initialisiere Google Sign-In, wenn die API geladen wurde
+    window.onload = function() {
+        initGoogleSignIn();
+    };
 </script>
+
 </body>
 </html>
