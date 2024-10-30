@@ -129,5 +129,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Stelle sicher, dass die Google API geladen wird
-onLoad();
