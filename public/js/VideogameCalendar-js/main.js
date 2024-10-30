@@ -146,6 +146,3 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Element mit der ID 'set-username' nicht gefunden.");
     }
 });
-
-
-console.log(gapi);
