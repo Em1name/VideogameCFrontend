@@ -94,23 +94,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Event Listener für das Setzen des Benutzernamens
-document.getElementById('set-username').addEventListener('click', async function () {
-    const usernameInput = document.getElementById('username').value.trim();
+document.addEventListener('DOMContentLoaded', () => {
+    const setUsernameButton = document.getElementById('set-username');
 
-    if (usernameInput === "") {
-        alert("Bitte gib einen Benutzernamen ein.");
-        return;
-    }
+    // Überprüfen, ob der Button vorhanden ist, bevor du den Event-Listener hinzufügst
+    if (setUsernameButton) {
+        setUsernameButton.addEventListener('click', async function () {
+            const usernameInput = document.getElementById('username').value.trim();
 
-    try {
-        await setUsername(usernameInput);
-        window.location.href = '/homepage.html'; // Weiterleitung zur Homepage
-    } catch (error) {
-        console.error('Fehler beim Festlegen des Benutzernamens:', error);
-        alert("Fehler beim Festlegen des Benutzernamens. Bitte versuche es erneut.");
+            if (usernameInput === "") {
+                alert("Bitte gib einen Benutzernamen ein.");
+                return;
+            }
+
+            try {
+                await setUsername(usernameInput);
+                window.location.href = '/homepage.html'; // Weiterleitung zur Homepage
+            } catch (error) {
+                console.error('Fehler beim Festlegen des Benutzernamens:', error);
+                alert("Fehler beim Festlegen des Benutzernamens. Bitte versuche es erneut.");
+            }
+        });
+    } else {
+        console.error("Element mit der ID 'set-username' nicht gefunden.");
     }
 });
+
 
 // Aufrufen von onLoad, um die Google API zu laden
 onLoad();
