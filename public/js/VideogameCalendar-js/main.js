@@ -62,29 +62,7 @@ async function sendTokenToServer(id_token) {
 
 
 
-// Google Login Callback
-function onLoad() {
-    if (!window.gapi) {
-        console.error('Google API nicht verfügbar');
-        return;
-    }
 
-    gapi.load('auth2', () => {
-        gapi.auth2.init({
-            client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com'
-        }).then(() => {
-            const googleLoginButton = document.querySelector('.g_id_signin');
-            if (googleLoginButton) {
-                googleLoginButton.onclick = handleGoogleSignIn; // Event Listener vereinfachen
-            } else {
-                console.error('Google Login Button nicht gefunden.');
-            }
-        }).catch(error => {
-            console.error('Fehler bei der Authentifizierung:', error);
-        });
-    });
-    window.onload = onLoad;
-}
 
 // Funktion zum Einloggen mit Google
 function handleGoogleSignIn() {

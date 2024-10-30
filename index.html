@@ -20,39 +20,34 @@
     </div>
 </main>
 
-<script type="module" src="./public/js/VideogameCalendar-js/main.js" defer></script>
-<style>
-    #spinner {
-        display: none; /* Verstecke den Spinner zunächst */
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000; /* Hoch genug, um über dem Inhalt zu sein */
-    }
-</style>
-
-<body>
-<div id="spinner">Lädt...</div> <!-- Einfacher Spinner -->
-<header>
-    <h1>Videospielkalender</h1>
-</header>
-<main>
-    <div class="login-container">
-        <h2>Einloggen mit Google</h2>
-        ...
-    </div>
-</main>
-
 <script>
-    // Zeige den Spinner an, während die Seite geladen wird
-    document.getElementById('spinner').style.display = 'block';
+    // Google Login Callback
+function onLoad() {
+    if (!window.gapi) {
+        console.error('Google API nicht verfügbar');
+        return;
+    }
 
-    window.onload = function() {
-        document.getElementById('spinner').style.display = 'none'; // Verstecke den Spinner, wenn die Seite vollständig geladen ist
-    };
+    gapi.load('auth2', () => {
+        gapi.auth2.init({
+            client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com'
+        }).then(() => {
+            const googleLoginButton = document.querySelector('.g_id_signin');
+            if (googleLoginButton) {
+                googleLoginButton.onclick = handleGoogleSignIn; // Event Listener vereinfachen
+            } else {
+                console.error('Google Login Button nicht gefunden.');
+            }
+        }).catch(error => {
+            console.error('Fehler bei der Authentifizierung:', error);
+        });
+    });
+
+}
+
+    document.addEventListener('DOMContentLoaded', onLoad); // Nutze DOMContentLoaded
 </script>
-</body>
 
+<script type="module" src="./public/js/VideogameCalendar-js/main.js" defer></script>
 </body>
 </html>
