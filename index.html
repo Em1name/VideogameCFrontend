@@ -42,7 +42,7 @@
         const id_token = response.credential;
 
         // Hier wird der ID-Token an den Backend-Server gesendet
-        fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
+        fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google/callback', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
