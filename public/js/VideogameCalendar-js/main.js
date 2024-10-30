@@ -26,11 +26,17 @@ async function handleCreatePost() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.post-form').addEventListener('submit', function (event) {
-        event.preventDefault(); // Verhindert das Standardverhalten
-        handleCreatePost();
-    });
+    const postForm = document.getElementById('postForm');
+    if (postForm) {
+        postForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Verhindert das Standardverhalten
+            handleCreatePost();
+        });
+    } else {
+        console.error('Element mit ID "postForm" nicht gefunden.');
+    }
 });
+
 
 
 // Google Login Callback
@@ -74,12 +80,19 @@ function onSignIn(googleUser) {
 // Ereignis-Listener für Google Login Button
 document.addEventListener('DOMContentLoaded', () => {
     const googleLoginButton = document.querySelector('.g_id_signin');
-    googleLoginButton.addEventListener('click', function() {
-        gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
-            console.error('Error during sign in:', error);
+
+    // Überprüfen, ob das Element existiert
+    if (googleLoginButton) {
+        googleLoginButton.addEventListener('click', function() {
+            gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
+                console.error('Error during sign in:', error);
+            });
         });
-    });
+    } else {
+        console.error('Google Login Button nicht gefunden.');
+    }
 });
+
 
 // Event Listener für das Setzen des Benutzernamens
 document.getElementById('set-username').addEventListener('click', async function () {
