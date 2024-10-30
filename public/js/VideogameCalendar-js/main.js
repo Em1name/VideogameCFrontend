@@ -51,7 +51,7 @@ function onLoad() {
 // Funktion zum Einloggen mit Google
 function onSignIn(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
-
+    console.log("du wichser");
     fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google/callback', {
         method: 'POST',
         headers: {
@@ -60,6 +60,7 @@ function onSignIn(googleUser) {
         body: JSON.stringify({ id_token })
     })
     .then(response => {
+        console.log("bin back");
         if (response.ok) {
             return response.json();
         } else {
