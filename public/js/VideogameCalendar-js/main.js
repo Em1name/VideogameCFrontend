@@ -66,9 +66,6 @@ function onLoad() {
     }
 }
 
-// Das onLoad Ereignis bei Fensterladung verknüpfen
-window.onload = onLoad;
-
 
 // Funktion zum Einloggen mit Google
 function onSignIn(googleUser) {
