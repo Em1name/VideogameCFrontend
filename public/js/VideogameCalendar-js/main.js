@@ -25,11 +25,13 @@ async function handleCreatePost() {
     }
 }
 
-// Event Listener für das Formular hinzufügen
-document.querySelector('.post-form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Verhindert das Standardverhalten
-    handleCreatePost();
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.post-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Verhindert das Standardverhalten
+        handleCreatePost();
+    });
 });
+
 
 // Google Login Callback
 function onLoad() {

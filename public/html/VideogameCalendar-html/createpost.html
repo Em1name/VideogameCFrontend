@@ -56,64 +56,7 @@
     </div>
 </main>
 
-<script>
-    const menuButton = document.getElementById('menuButton');
-    const dropdownMenu = document.getElementById('dropdownMenu');
+<script src="../../js/VideogameCalendar-js/main.js" type="module"></script>
 
-    menuButton.addEventListener('click', function () {
-        dropdownMenu.classList.toggle('show'); // Menü öffnen oder schließen
-    });
-
-    // Event Listener für das Schließen des Menüs
-    document.addEventListener('click', function (event) {
-        // Überprüfen, ob das geklickte Element nicht der Menü-Button oder das Dropdown-Menü ist
-        if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.classList.remove('show'); // Menü schließen
-        }
-    });
-
-    // Event Listener für das Absenden des Formulars
-    document.getElementById('postForm').addEventListener('submit', async function (event) {
-        event.preventDefault(); // Standardverhalten des Formulars verhindern
-
-        // Eingabewerte abrufen
-        const title = document.getElementById('post-title').value;
-        const content = document.getElementById('post-content').value;
-        const platform = document.getElementById('platform').value;
-        const genre = document.getElementById('genre').value;
-        const location = document.getElementById('location').value;
-        const startDateTime = document.getElementById('startDateTime').value;
-        const endDateTime = document.getElementById('endDateTime').value;
-
-        // Erstellen des Post-Objekts
-        const post = {
-            title: title,
-            content: content,
-            platform: platform,
-            genre: genre,
-            location: location,
-            startDateTime: startDateTime,
-            endDateTime: endDateTime
-        };
-
-        // API-Request zum Erstellen des Posts
-        const response = await fetch('/api/posts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(post)
-        });
-
-        if (response.ok) {
-            alert('Beitrag erfolgreich erstellt!');
-            // Optional: Zurück zur Startseite oder andere Logik
-            // window.location.href = 'homepage.html';
-        } else {
-            alert('Fehler beim Erstellen des Beitrags.');
-        }
-    });
-</script>
 </body>
-
 </html>
