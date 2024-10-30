@@ -1,30 +1,5 @@
 import { setUsername, createPost, fetchPosts, checkAuthStatus, uploadProfilePicture } from './api.js';
 
-// Funktion zum Erstellen eines neuen Beitrags
-async function handleCreatePost() {
-    const title = document.getElementById('post-title').value.trim();
-    const content = document.getElementById('post-content').value.trim();
-    const platform = document.getElementById('platform').value.trim();
-    const genre = document.getElementById('genre').value.trim();
-    const releaseDate = new Date().toISOString();
-
-    if (!title || !content || !platform || !genre) {
-        alert("Bitte fülle alle erforderlichen Felder aus.");
-        return;
-    }
-
-    const newPost = { title, content, platform, genre, releaseDate };
-
-    try {
-        const result = await createPost(newPost);
-        console.log(result);
-        alert("Beitrag erfolgreich erstellt!");
-    } catch (error) {
-        console.error('Fehler beim Erstellen des Beitrags:', error);
-        alert("Fehler beim Erstellen des Beitrags. Bitte versuche es erneut.");
-    }
-}
-
 // Google Login Callback
 function onLoad() {
     if (!window.gapi) {
@@ -38,7 +13,7 @@ function onLoad() {
         }).then(() => {
             const googleLoginButton = document.querySelector('.g_id_signin');
             if (googleLoginButton) {
-                googleLoginButton.onclick = handleGoogleSignIn; // Event Listener vereinfachen
+                googleLoginButton.onclick = handleGoogleSignIn;
             } else {
                 console.error('Google Login Button nicht gefunden.');
             }
@@ -90,8 +65,30 @@ async function sendTokenToServer(id_token) {
     }
 }
 
-// Haupt-Event-Listener für DOMContentLoaded
-document.addEventListener('DOMContentLoaded', onLoad);
+// Funktion zum Erstellen eines neuen Beitrags
+async function handleCreatePost() {
+    const title = document.getElementById('post-title').value.trim();
+    const content = document.getElementById('post-content').value.trim();
+    const platform = document.getElementById('platform').value.trim();
+    const genre = document.getElementById('genre').value.trim();
+    const releaseDate = new Date().toISOString();
+
+    if (!title || !content || !platform || !genre) {
+        alert("Bitte fülle alle erforderlichen Felder aus.");
+        return;
+    }
+
+    const newPost = { title, content, platform, genre, releaseDate };
+
+    try {
+        const result = await createPost(newPost);
+        console.log(result);
+        alert("Beitrag erfolgreich erstellt!");
+    } catch (error) {
+        console.error('Fehler beim Erstellen des Beitrags:', error);
+        alert("Fehler beim Erstellen des Beitrags. Bitte versuche es erneut.");
+    }
+}
 
 // Funktion zum Festlegen des Benutzernamens
 async function handleSetUsername() {
@@ -113,6 +110,8 @@ async function handleSetUsername() {
 
 // Haupt-Event-Listener für DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
+    onLoad();
+
     const postForm = document.getElementById('postForm');
     if (postForm) {
         postForm.addEventListener('submit', function (event) {
