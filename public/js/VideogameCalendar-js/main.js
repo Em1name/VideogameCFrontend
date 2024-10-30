@@ -99,3 +99,5 @@ document.getElementById('set-username').addEventListener('click', async function
 
 // Aufrufen von onLoad, um die Google API zu laden
 onLoad();
+
+console.log(gapi);
