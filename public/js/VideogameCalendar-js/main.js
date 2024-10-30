@@ -1,4 +1,4 @@
-import {setUsername, createPost, fetchPosts, checkAuthStatus, uploadProfilePicture} from './api.js';
+import defaultExport from './api.js';
 
 // Funktion zum Erstellen eines neuen Beitrags
 async function handleCreatePost() {
