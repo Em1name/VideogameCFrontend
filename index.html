@@ -6,7 +6,7 @@
     <title>Login - Videospielkalender</title>
     <link rel="stylesheet" href="./public/css/VideogameCalendar-css/styles.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script>window.onload = onload;</script>
+    <script>window.onload = onLoad;</script>
     <meta name="google-signin-client_id" content="495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com">
 </head>
 <body>
@@ -16,21 +16,18 @@
 <main>
     <div class="login-container">
         <h2>Einloggen mit Google</h2>
-        <!-- Container für Google Login Button -->
-        <div id="g_id_onload"
-             data-client_id="495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com"
-             data-callback="handleCredentialResponse"
-             data-auto_select="false"></div> <!-- Auto-Select deaktiviert -->
-        <div class="g_id_signin"
-             data-type="standard"
-             data-size="large"
-             data-theme="outline"
-             data-text="sign_in_with"
-             data-shape="rectangular"></div>
+        <div id="g_id_onload" data-client_id="495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com" data-callback="handleCredentialResponse"></div>
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
     </div>
 </main>
 
 <script type="module" src="./public/js/VideogameCalendar-js/main.js" defer></script>
-
+<script>
+    function handleCredentialResponse(response) {
+        const id_token = response.credential;
+        console.log("ID Token:", id_token);
+        // Hier kannst du den Token an deinen Server senden oder lokal verarbeiten
+    }
+</script>
 </body>
 </html>

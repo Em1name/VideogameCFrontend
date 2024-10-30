@@ -27,60 +27,73 @@ async function handleCreatePost() {
 
 // Google Login Callback
 function onLoad() {
-    if (typeof gapi !== 'undefined') {
-        gapi.load('auth2', function() {
-            gapi.auth2.init({
-                client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com'
-            }).then(() => {
-                const googleLoginButton = document.querySelector('.g_id_signin');
-                if (googleLoginButton) {
-                    googleLoginButton.addEventListener('click', function() {
-                        const authInstance = gapi.auth2.getAuthInstance();
-                        authInstance.signIn().then(onSignIn).catch(error => {
-                            console.error('Error during sign in:', error);
-                        });
-                    });
-                } else {
-                    console.error('Google Login Button nicht gefunden.');
-                }
-            });
-        });
-    } else {
+    if (!window.gapi) {
         console.error('Google API nicht verfügbar');
+        return;
+    }
+
+    gapi.load('auth2', () => {
+        gapi.auth2.init({
+            client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com'
+        }).then(() => {
+            const googleLoginButton = document.querySelector('.g_id_signin');
+            if (googleLoginButton) {
+                googleLoginButton.onclick = handleGoogleSignIn; // Event Listener vereinfachen
+            } else {
+                console.error('Google Login Button nicht gefunden.');
+            }
+        }).catch(error => {
+            console.error('Fehler bei der Authentifizierung:', error);
+        });
+    });
+}
+
+// Funktion zum Einloggen mit Google
+function handleGoogleSignIn() {
+    const authInstance = gapi.auth2.getAuthInstance();
+    authInstance.signIn().then(onSignIn).catch(error => {
+        console.error('Fehler beim Einloggen:', error);
+    });
+}
+
+// Funktion, die nach erfolgreichem Login aufgerufen wird
+async function onSignIn(googleUser) {
+    const id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token:", id_token);
+
+    // Token an den Server senden
+    await sendTokenToServer(id_token);
+}
+
+// Funktion, um den Token an den Server zu senden
+async function sendTokenToServer(id_token) {
+    try {
+        const response = await fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id_token }) // ID Token im JSON-Format senden
+        });
+
+        if (!response.ok) {
+            throw new Error('Fehler beim Senden des Tokens: ' + response.statusText);
+        }
+
+        const data = await response.json();
+        console.log('Serverantwort:', data);
+
+        // Optional: Hier kannst du die nächste Aktion durchführen, z.B. Weiterleitung
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        }
+    } catch (error) {
+        console.error('Fehler beim Senden des Tokens:', error);
     }
 }
 
-
-
-// Funktion zum Einloggen mit Google
-function onSignIn(googleUser) {
-    const id_token = googleUser.getAuthResponse().id_token;
-    fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id_token })
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            alert('Fehler beim Einloggen.');
-            throw new Error('Login failed');
-        }
-    })
-    .then(data => {
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        } else {
-            console.error('Redirect-URL nicht gefunden in der Antwort.');
-        }
-    })
-    .catch(error => {
-        console.error('Fehler beim Fetch:', error);
-    });
-}
+// Haupt-Event-Listener für DOMContentLoaded
+document.addEventListener('DOMContentLoaded', onLoad);
 
 // Funktion zum Festlegen des Benutzernamens
 async function handleSetUsername() {
@@ -110,17 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         console.error('Element mit ID "postForm" nicht gefunden.');
-    }
-
-    const googleLoginButton = document.querySelector('.g_id_signin');
-    if (googleLoginButton) {
-        googleLoginButton.addEventListener('click', function() {
-            gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
-                console.error('Error during sign in:', error);
-            });
-        });
-    } else {
-        console.error('Google Login Button nicht gefunden.');
     }
 
     const setUsernameButton = document.getElementById('set-username');
