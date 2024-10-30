@@ -9,60 +9,111 @@
 </head>
 
 <body>
-    <header>
-        <h1>Beitrag erstellen</h1>
-    </header>
-    <div class="sidebar">
-        <button class="menu-button" id="menuButton">☰ Menü</button>
-        <ul class="dropdown-menu" id="dropdownMenu">
-            <li><a href="homepage.html">Startseite</a></li>
-            <li><a href="calendar.html">Kalender</a></li>
-            <li><a href="createpost.html">Beitrag erstellen</a></li>
-            <li><a href="profile.html">Profil</a></li>
-            <li><a href="settings.html">Einstellungen</a></li>
-            <li><a href="../../../index.html">Abmelden</a></li>
-        </ul>
+<header>
+    <h1>Beitrag erstellen</h1>
+</header>
+<div class="sidebar">
+    <button class="menu-button" id="menuButton">☰ Menü</button>
+    <ul class="dropdown-menu" id="dropdownMenu">
+        <li><a href="homepage.html">Startseite</a></li>
+        <li><a href="calendar.html">Kalender</a></li>
+        <li><a href="createpost.html">Beitrag erstellen</a></li>
+        <li><a href="profile.html">Profil</a></li>
+        <li><a href="settings.html">Einstellungen</a></li>
+        <li><a href="../../../index.html">Abmelden</a></li>
+    </ul>
+</div>
+<main>
+    <div class="post-container">
+        <form class="post-form" id="postForm">
+            <label for="post-title">Überschrift:</label>
+            <input type="text" id="post-title" name="post-title" placeholder="Gib die Überschrift ein" required>
+
+            <label for="post-content">Inhalt:</label>
+            <textarea id="post-content" name="post-content" rows="10" placeholder="Schreibe deinen Beitrag hier..."
+                      required></textarea>
+
+            <label for="platform">Plattform:</label>
+            <input type="text" id="platform" name="platform" placeholder="Gib die Plattform ein" required>
+
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre" placeholder="Gib das Genre ein" required>
+
+            <label for="location">Ort:</label>
+            <input type="text" id="location" name="location" placeholder="Gib den Ort ein" required>
+
+            <label for="startDateTime">Startzeit:</label>
+            <input type="datetime-local" id="startDateTime" name="startDateTime" required>
+
+            <label for="endDateTime">Endzeit:</label>
+            <input type="datetime-local" id="endDateTime" name="endDateTime" required>
+
+            <label for="file-upload">Datei anhängen:</label>
+            <input type="file" id="file-upload" name="file-upload">
+
+            <button type="submit">Beitrag erstellen</button>
+        </form>
     </div>
-    <main>
-        <div class="post-container">
-            <form class="post-form">
-                <label for="post-title">Überschrift:</label>
-                <input type="text" id="post-title" name="post-title" placeholder="Gib die Überschrift ein" required>
+</main>
 
-                <label for="post-content">Inhalt:</label>
-                <textarea id="post-content" name="post-content" rows="10" placeholder="Schreibe deinen Beitrag hier..."
-                    required></textarea>
+<script>
+    const menuButton = document.getElementById('menuButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
 
-                <label for="platform">Plattform:</label>
-                <input type="text" id="platform" name="platform" placeholder="Gib die Plattform ein" required>
+    menuButton.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('show'); // Menü öffnen oder schließen
+    });
 
-                <label for="genre">Genre:</label>
-                <input type="text" id="genre" name="genre" placeholder="Gib das Genre ein" required>
+    // Event Listener für das Schließen des Menüs
+    document.addEventListener('click', function (event) {
+        // Überprüfen, ob das geklickte Element nicht der Menü-Button oder das Dropdown-Menü ist
+        if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove('show'); // Menü schließen
+        }
+    });
 
-                <label for="file-upload">Datei anhängen:</label>
-                <input type="file" id="file-upload" name="file-upload">
+    // Event Listener für das Absenden des Formulars
+    document.getElementById('postForm').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Standardverhalten des Formulars verhindern
 
-                <button type="submit">Beitrag erstellen</button>
-            </form>
-        </div>
-    </main>
+        // Eingabewerte abrufen
+        const title = document.getElementById('post-title').value;
+        const content = document.getElementById('post-content').value;
+        const platform = document.getElementById('platform').value;
+        const genre = document.getElementById('genre').value;
+        const location = document.getElementById('location').value;
+        const startDateTime = document.getElementById('startDateTime').value;
+        const endDateTime = document.getElementById('endDateTime').value;
 
-    <script>
-        const menuButton = document.getElementById('menuButton');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+        // Erstellen des Post-Objekts
+        const post = {
+            title: title,
+            content: content,
+            platform: platform,
+            genre: genre,
+            location: location,
+            startDateTime: startDateTime,
+            endDateTime: endDateTime
+        };
 
-        menuButton.addEventListener('click', function () {
-            dropdownMenu.classList.toggle('show'); // Menü öffnen oder schließen
+        // API-Request zum Erstellen des Posts
+        const response = await fetch('/api/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(post)
         });
 
-        // Event Listener für das Schließen des Menüs
-        document.addEventListener('click', function (event) {
-            // Überprüfen, ob das geklickte Element nicht der Menü-Button oder das Dropdown-Menü ist
-            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.remove('show'); // Menü schließen
-            }
-        });
-    </script>
+        if (response.ok) {
+            alert('Beitrag erfolgreich erstellt!');
+            // Optional: Zurück zur Startseite oder andere Logik
+            // window.location.href = 'homepage.html';
+        } else {
+            alert('Fehler beim Erstellen des Beitrags.');
+        }
+    });
+</script>
 </body>
 
 </html>

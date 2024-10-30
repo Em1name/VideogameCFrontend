@@ -17,14 +17,44 @@ window.onload = async () => {
 
 // Funktion zum Erstellen eines neuen Beitrags
 async function handleCreatePost() {
+    // Daten aus dem Formular abrufen
+    const title = document.getElementById('post-title').value.trim();
+    const content = document.getElementById('post-content').value.trim();
+    const platform = document.getElementById('platform').value.trim();
+    const genre = document.getElementById('genre').value.trim();
+    const releaseDate = new Date().toISOString(); // Aktuelles Datum als Release-Datum
+
+    // Überprüfen, ob die erforderlichen Felder ausgefüllt sind
+    if (!title || !content || !platform || !genre) {
+        alert("Bitte fülle alle erforderlichen Felder aus.");
+        return;
+    }
+
+    // Neues Post-Objekt erstellen
     const newPost = {
-        title: "Neuer Beitrag",
-        content: "Dies ist der Inhalt des neuen Beitrags.",
-        releaseDate: new Date().toISOString()
+        title: title,
+        content: content,
+        platform: platform,
+        genre: genre,
+        releaseDate: releaseDate
     };
-    const result = await createPost(newPost);
-    console.log(result);
+
+    try {
+        const result = await createPost(newPost);
+        console.log(result); // Ergebnis im Konsolenlog anzeigen
+        alert("Beitrag erfolgreich erstellt!"); // Erfolgsmeldung anzeigen
+    } catch (error) {
+        console.error('Fehler beim Erstellen des Beitrags:', error);
+        alert("Fehler beim Erstellen des Beitrags. Bitte versuche es erneut.");
+    }
 }
+
+// Event Listener für das Formular hinzufügen
+document.querySelector('.post-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Verhindert das Standard-Formular-Submit-Verhalten
+    handleCreatePost(); // Funktion zum Erstellen eines neuen Beitrags aufrufen
+});
+
 
 // Funktion zum Hochladen eines Profilbilds
 async function handleProfilePictureUpload(file) {

@@ -19,13 +19,20 @@ export async function createPost(postData) {
     const response = await fetch('/api/posts', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json' // Setze den Content-Type auf JSON
         },
-        body: JSON.stringify(postData)
+        body: JSON.stringify(postData) // Konvertiere postData in JSON
     });
-    const result = await response.json();
-    return result;
+
+    // Überprüfen, ob die Antwort erfolgreich war
+    if (!response.ok) {
+        throw new Error('Fehler beim Erstellen des Beitrags: ' + response.statusText);
+    }
+
+    // Die Antwort vom Server zurückgeben
+    return await response.json();
 }
+
 
 // Profilbild hochladen
 export async function uploadProfilePicture(file) {
@@ -41,9 +48,14 @@ export async function uploadProfilePicture(file) {
     return result;
 }
 
+//Benutzernamen erstellen
 document.getElementById('set-username').addEventListener('click', function () {
     const username = document.getElementById('username').value;
 
+    if (!username) {
+            alert('Bitte gib einen Benutzernamen ein.');
+            return;
+    }
     fetch('/api/users/set-username', {
         method: 'POST',
         headers: {
@@ -57,5 +69,9 @@ document.getElementById('set-username').addEventListener('click', function () {
         } else {
             alert('Fehler beim Festlegen des Benutzernamens');
         }
+         .catch(error => {
+                console.error('Fehler:', error);
+                alert('Ein unerwarteter Fehler ist aufgetreten.');
+         });
     });
 });
