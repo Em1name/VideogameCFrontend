@@ -29,9 +29,9 @@ async function handleCreatePost() {
 function onLoad() {
     if (typeof gapi !== 'undefined') {
         gapi.load('auth2', function() {
-            console.log(typeof callback);
             gapi.auth2.init({
                 client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com',
+                callback: onSignIn
             }).then(() => {
                 const googleLoginButton = document.querySelector('.g_id_signin');
                 if (googleLoginButton) {
@@ -50,6 +50,7 @@ function onLoad() {
         console.error('Google API nicht verfügbar');
     }
 }
+
 
 // Funktion zum Einloggen mit Google
 function onSignIn(googleUser) {
