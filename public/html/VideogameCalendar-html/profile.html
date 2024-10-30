@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Videospielkalender</title>
+    <link rel="stylesheet" href="../../css/VideogameCalendar-css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Profil</h1>
+    </header>
+    <div class="sidebar">
+        <button class="menu-button" id="menuButton">☰ Menü</button>
+        <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="homepage.html">Startseite</a></li>
+            <li><a href="calendar.html">Kalender</a></li>
+            <li><a href="createpost.html">Beitrag erstellen</a></li>
+            <li><a href="profile.html">Profil</a></li> <!-- Aktuelle Seite -->
+            <li><a href="settings.html">Einstellungen</a></li>
+            <li><a href="../../../index.html">Abmelden</a></li>
+        </ul>
+    </div>
+    <main>
+        <div class="profile-container">
+            <h2>Dein Profil</h2>
+
+            <div class="profile-picture">
+                <img id="profile-pic" src="default-profile.png" alt="Profilbild" width="150">
+                <button id="change-pic-button">Bild ändern</button>
+                <input type="file" id="file-upload" name="file-upload" accept="image/*" style="display: none;">
+            </div>
+
+            <div class="profile-info">
+                <label for="email">E-Mail:</label>
+                <input type="email" id="email" name="email" value="user@example.com" readonly>
+
+                <label for="password">Passwort:</label>
+                <input type="password" id="password" name="password" value="********" readonly>
+                
+                <button id="edit-button">Bearbeiten</button>
+                <button id="save-button" style="display: none;">Speichern</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const editButton = document.getElementById('edit-button');
+        const saveButton = document.getElementById('save-button');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const changePicButton = document.getElementById('change-pic-button');
+        const fileUpload = document.getElementById('file-upload');
+        const profilePic = document.getElementById('profile-pic');
+
+        menuButton.addEventListener('click', function () {
+            dropdownMenu.classList.toggle('show'); // Menü öffnen oder schließen
+        });
+
+        // Event Listener für das Schließen des Menüs
+        document.addEventListener('click', function (event) {
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show'); // Menü schließen
+            }
+        });
+
+        // Bearbeiten der Eingabefelder
+        editButton.addEventListener('click', function () {
+            emailInput.removeAttribute('readonly');
+            passwordInput.removeAttribute('readonly');
+            editButton.style.display = 'none';
+            saveButton.style.display = 'inline';
+        });
+
+        // Speichern der Eingabewerte (Hier kannst du Logik hinzufügen, um die Werte zu speichern)
+        saveButton.addEventListener('click', function () {
+            emailInput.setAttribute('readonly', true);
+            passwordInput.setAttribute('readonly', true);
+            editButton.style.display = 'inline';
+            saveButton.style.display = 'none';
+        });
+
+        // Bild ändern Button
+        changePicButton.addEventListener('click', function () {
+            fileUpload.click(); // Datei-Upload-Feld auslösen
+        });
+
+        // Profilbild aktualisieren
+        fileUpload.addEventListener('change', function () {
+            const file = fileUpload.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profilePic.src = e.target.result; // Profilbild aktualisieren
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

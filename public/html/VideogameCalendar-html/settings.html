@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Einstellungen</title>
+    <link rel="stylesheet" href="../../css/VideogameCalendar-css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Einstellungen</h1>
+    </header>
+    <div class="sidebar">
+        <button class="menu-button" id="menuButton">☰ Menü</button>
+        <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="homepage.html">Startseite</a></li>
+            <li><a href="calendar.html">Kalender</a></li>
+            <li><a href="createpost.html">Beitrag erstellen</a></li>
+            <li><a href="profile.html">Profil</a></li>
+            <li><a href="settings.html">Einstellungen</a></li>
+            <li><a href="login.html">Abmelden</a></li>
+        </ul>
+    </div>
+    <main>
+        <div class="settings-container">
+            <h2>Design-Einstellungen</h2>
+            <label for="theme-switch">Wechsle zwischen Dunkel- und Hellmodus:</label>
+            <select id="theme-switch">
+                <option value="dark">Dunkelmodus</option>
+                <option value="light">Hellmodus</option>
+            </select>
+        </div>
+    </main>
+
+    <script src="../../js/VideogameCalendar-js/main.js"></script>
+    
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuButton.addEventListener('click', function () {
+            dropdownMenu.classList.toggle('show'); // Menü öffnen oder schließen
+        });
+
+        // Event Listener für das Schließen des Menüs
+        document.addEventListener('click', function (event) {
+            // Überprüfen, ob das geklickte Element nicht der Menü-Button oder das Dropdown-Menü ist
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show'); // Menü schließen
+            }
+        });
+    </script>
+</body>
+</html>
+
+

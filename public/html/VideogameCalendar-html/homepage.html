@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videospielkalender</title>
+    <link rel="stylesheet" href="../../css/VideogameCalendar-css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Videospielkalender</h1>
+    </header>
+    <div class="sidebar">
+        <button class="menu-button" id="menuButton">☰ Menü</button>
+        <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="homepage.html">Startseite</a></li> <!-- Link zur Startseite -->
+            <li><a href="calendar.html">Kalender</a></li>
+            <li><a href="createpost.html">Beitrag erstellen</a></li>
+            <li><a href="profile.html">Profil</a></li>
+            <li><a href="settings.html">Einstellungen</a></li>
+            <li><a href="../../../index.html">Abmelden</a></li>
+        </ul>
+        
+    </div>
+    
+    <main>
+        <div class="calendar">
+            <iframe src="https://calendar.google.com/calendar/embed?src=your_calendar_id&ctz=Europe/Berlin" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </main>
+
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuButton.addEventListener('click', function () {
+            dropdownMenu.classList.toggle('show'); // Menü öffnen oder schließen
+        });
+
+        // Event Listener für das Schließen des Menüs
+        document.addEventListener('click', function (event) {
+            // Überprüfen, ob das geklickte Element nicht der Menü-Button oder das Dropdown-Menü ist
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show'); // Menü schließen
+            }
+        });
+    </script>
+</body>
+</html>
