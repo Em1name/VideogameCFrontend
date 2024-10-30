@@ -52,7 +52,7 @@ function onLoad() {
 function onSignIn(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
     console.log("du wichser");
-    fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google/callback', {
+    fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -69,12 +69,35 @@ function onSignIn(googleUser) {
         }
     })
     .then(data => {
+              console.log(data);
+
         if (data.redirect) {
-            window.location.href = "https://em1name.github.io/VideogameCFrontend/api/auth/google/callback"; // Weiterleitung zur angegebenen URL
+            window.location.href = "https://em1name.github.io/VideogameCFrontend/api/auth/google/callback";
         }
+        else{
+        console.error('Redirect-URL nicht gefunden in der Antwort.');}
     })
     .catch(error => {
         console.error('Fehler beim Fetch:', error);
+    });
+}
+// Initialisierung von gapi
+window.onload = function() {
+    gapi.load('auth2', function() {
+        gapi.auth2.init({
+            client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com',
+        }).then(() => {
+            const googleLoginButton = document.querySelector('.g_id_signin');
+            if (googleLoginButton) {
+                googleLoginButton.addEventListener('click', function() {
+                    gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
+                        console.error('Error during sign in:', error);
+                    });
+                });
+            } else {
+                console.error('Google Login Button nicht gefunden.');
+            }
+        });
     });
 }
 
