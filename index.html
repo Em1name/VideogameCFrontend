@@ -3,22 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Videospielkalender</title>
-    <link rel="stylesheet" href="./public/css/VideogameCalendar-css/styles.css">
+    <title>Google Login</title>
+    <meta name="google-signin-client_id" content="DEINE_CLIENT_ID.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com">
+    <script src="./public/js/VideogameCalendar-js/main.js" defer></script>
 </head>
 <body>
-<header>
-    <h1>Videospielkalender</h1>
-</header>
-<main>
-    <div class="login-container">
-        <h2>Einloggen mit Google</h2>
-        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
-    </div>
-</main>
+<div class="container">
+    <h1>Willkommen!</h1>
+    <div class="g_id_signin" data-type="standard"></div> <!-- Google Login Button -->
+</div>
 
+<script>
+    // Funktion zum Einloggen mit Google
+    function onSignIn(googleUser) {
+        const id_token = googleUser.getAuthResponse().id_token;
 
+        fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id_token })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                alert('Fehler beim Einloggen.');
+                throw new Error('Login failed');
+            }
+        })
+        .then(data => {
+            if (data.redirect) {
+                window.location.href = data.redirect; // Weiterleitung zur angegebenen URL
+            }
+        })
+        .catch(error => {
+            console.error('Fehler beim Fetch:', error);
+        });
+    }
+
+    // Ereignis-Listener für Google Login Button
+    document.addEventListener('DOMContentLoaded', () => {
+        const googleLoginButton = document.querySelector('.g_id_signin');
+
+        // Überprüfen, ob das Element existiert
+        if (googleLoginButton) {
+            googleLoginButton.addEventListener('click', function() {
+                gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
+                    console.error('Error during sign in:', error);
+                });
+            });
+        } else {
+            console.error('Google Login Button nicht gefunden.');
+        }
+    });
+</script>
 </body>
 </html>
