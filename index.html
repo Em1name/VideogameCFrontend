@@ -22,6 +22,38 @@
 </main>
 
 <script type="module" src="./public/js/VideogameCalendar-js/main.js" defer></script>
+<style>
+    #spinner {
+        display: none; /* Verstecke den Spinner zunächst */
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Hoch genug, um über dem Inhalt zu sein */
+    }
+</style>
+
+<body>
+<div id="spinner">Lädt...</div> <!-- Einfacher Spinner -->
+<header>
+    <h1>Videospielkalender</h1>
+</header>
+<main>
+    <div class="login-container">
+        <h2>Einloggen mit Google</h2>
+        ...
+    </div>
+</main>
+
+<script>
+    // Zeige den Spinner an, während die Seite geladen wird
+    document.getElementById('spinner').style.display = 'block';
+
+    window.onload = function() {
+        document.getElementById('spinner').style.display = 'none'; // Verstecke den Spinner, wenn die Seite vollständig geladen ist
+    };
+</script>
+</body>
 
 </body>
 </html>
