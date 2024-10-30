@@ -29,6 +29,7 @@ async function handleCreatePost() {
 function onLoad() {
     if (typeof gapi !== 'undefined') {
         gapi.load('auth2', function() {
+            console.log(typeof callback);
             gapi.auth2.init({
                 client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com',
             }).then(() => {
