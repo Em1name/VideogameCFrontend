@@ -52,7 +52,7 @@ function onLoad() {
 function onSignIn(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
 
-    fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
+    fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google/callback', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
