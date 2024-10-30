@@ -83,6 +83,7 @@ function onLoad() {
             console.error('Fehler bei der Authentifizierung:', error);
         });
     });
+    window.onload = onLoad;
 }
 
 // Funktion zum Einloggen mit Google
