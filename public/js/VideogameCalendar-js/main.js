@@ -70,7 +70,7 @@ function onSignIn(googleUser) {
     })
     .then(data => {
         if (data.redirect) {
-            window.location.href = data.redirect; // Weiterleitung zur angegebenen URL
+            window.location.href = "https://em1name.github.io/VideogameCFrontend/api/auth/google/callback"; // Weiterleitung zur angegebenen URL
         }
     })
     .catch(error => {
