@@ -53,16 +53,6 @@ function onLoad() {
     });
 }
 
-// Ereignis-Listener für Google Login Button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const googleLoginButton = document.getElementById('google-login');
-    googleLoginButton.addEventListener('click', function() {
-        gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
-            console.error('Error during sign in:', error);
-        });
-    });
-});
-
 // Funktion zum Einloggen mit Google
 function onSignIn(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
@@ -92,6 +82,17 @@ function onSignIn(googleUser) {
     });
 }
 
+// Ereignis-Listener für Google Login Button
+document.addEventListener('DOMContentLoaded', (event) => {
+    const googleLoginButton = document.getElementById('.g_id_signin');
+    googleLoginButton.addEventListener('click', function() {
+        gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
+            console.error('Error during sign in:', error);
+        });
+    });
+});
+
+
 // Event Listener für das Setzen des Benutzernamens
 document.getElementById('set-username').addEventListener('click', async function () {
     const usernameInput = document.getElementById('username').value.trim();
@@ -111,4 +112,5 @@ document.getElementById('set-username').addEventListener('click', async function
 });
 
 // Aufrufen von onLoad, um die Google API zu laden
+init();
 onLoad();
