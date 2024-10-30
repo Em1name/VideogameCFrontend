@@ -6,25 +6,8 @@
     <title>Login - Videospielkalender</title>
     <link rel="stylesheet" href="./public/css/VideogameCalendar-css/styles.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script type="module" src="./public/js/VideogameCalendar-js/main.js"></script>
     <script>window.onload = onload;</script>
     <meta name="google-signin-client_id" content="495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f9f9f9;
-        }
-        .login-container {
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
 <header>
@@ -39,6 +22,8 @@
         <div>data-callback="onSignIn"</div>
     </div>
 </main>
+
+    <script type="module" src="./public/js/VideogameCalendar-js/main.js" defer></script>
 
 </body>
 </html>
