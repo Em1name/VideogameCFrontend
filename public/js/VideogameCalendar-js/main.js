@@ -145,7 +145,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Aufrufen von onLoad, um die Google API zu laden
-onLoad();
-
 console.log(gapi);
