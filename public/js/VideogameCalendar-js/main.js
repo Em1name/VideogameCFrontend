@@ -143,3 +143,20 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Element mit der ID 'set-username' nicht gefunden.");
     }
 });
+
+// Funktion zum Senden des Benutzernamens an den Server
+async function setUsername(username) {
+    const response = await fetch('/api/set-username', { // Passe diese URL an
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+    }
+
+    return await response.json();
+}
