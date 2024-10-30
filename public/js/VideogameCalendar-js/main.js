@@ -61,12 +61,55 @@ async function handleProfilePictureUpload(file) {
     const result = await uploadProfilePicture(file);
     console.log(result);
 }
-document.getElementById('google-login').addEventListener('click', function () {
-    // Hier solltest du den Google Login-Flow initiieren
-    const redirectUri = "http://your-backend-url/api/auth/google"; // Setze hier die URL deines Backends
 
-    window.location.href = redirectUri; // Weiterleitung zum Backend
+// Google Login Callback
+function onLoad() {
+    gapi.load('auth2', function() {
+        gapi.auth2.init({
+            client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com',
+        });
+    });
+}
+
+// Funktion zum Einloggen mit Google
+function onSignIn(googleUser) {
+    const profile = googleUser.getBasicProfile();
+    const id_token = googleUser.getAuthResponse().id_token;
+
+    // Sende das Token an dein Backend zur Überprüfung und Authentifizierung
+    fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_token })
+    })
+    .then(response => {
+        if (response.ok) {
+            // Erfolgreich eingeloggt, eventuell die Weiterleitung hier
+            window.location.href = 'homepage.html'; // Weiterleitung zur Homepage
+        } else {
+            alert('Fehler beim Einloggen.');
+        }
+    })
+    .catch(error => {
+        console.error('Fehler beim Fetch:', error);
+    });
+}
+
+// Ereignis-Listener für Google Login Button
+document.addEventListener('DOMContentLoaded', (event) => {
+    const googleLoginButton = document.getElementById('google-login');
+
+    googleLoginButton.addEventListener('click', function() {
+        gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
+            console.error('Error during sign in:', error);
+        });
+    });
 });
+
+// Aufrufen von onLoad, um die Google API zu laden
+onLoad();
 
 document.getElementById('set-username').addEventListener('click', function() {
     const usernameInput = document.getElementById('username').value.trim(); // Eingabe des Benutzers abrufen
