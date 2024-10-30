@@ -1,4 +1,4 @@
-/* Allgemeine Stile */
+/* Grundlayout */
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
@@ -35,7 +35,8 @@ header h1 {
     transition: width 0.3s ease;
 }
 
-.menu-button {
+/* Allgemeine Buttons */
+button.general-button {
     background-color: #b380ff;
     color: #ffffff;
     border: 1px solid #9f66d7;
@@ -48,8 +49,17 @@ header h1 {
     margin: 65px 0;
 }
 
-.menu-button:hover {
+button.general-button:hover {
     background-color: #9f66d7;
+}
+
+/* Google Sign-In Button */
+.g_id_signin {
+    z-index: 10;
+    position: relative;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
 }
 
 /* Dropdown-Menü */
@@ -111,11 +121,6 @@ main {
     text-align: center;
 }
 
-/* Beitragserstellungs- und Profilcontainer nutzen Container-Styles */
-.post-container, .profile-container, .footer-box {
-    composes: container;
-}
-
 /* Formularfelder */
 input, textarea {
     padding: 10px;
@@ -131,7 +136,7 @@ textarea {
     height: 300px;
 }
 
-/* Button */
+/* Button allgemeiner Stil */
 button {
     background-color: #b380ff;
     color: #ffffff;
@@ -165,7 +170,17 @@ header.light {
     background-color: #f1f1f1;
 }
 
-/* Anpassung an kleinere Bildschirme */
+/* Eingabefeld und Username Button für zentrale Ausrichtung */
+input[type="text"], button.username-button {
+    display: block;
+    margin: 15px auto;
+    padding: 10px;
+    font-size: 1.2em;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Responsives Design */
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
@@ -188,72 +203,9 @@ header.light {
         top: 70px;
         width: 100%;
     }
-    /* Benutzername-Seite */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #121212; /* Hintergrundfarbe */
-        color: #ffffff; /* Textfarbe */
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
 
-    /* Titel */
-    h1 {
-        text-align: center;
-        margin: 20px 0;
-        font-size: 2.5em;
-        color: #b380ff; /* Farbe des Titels */
+    .g_id_signin {
+        width: 100%;
+        margin-top: 20px;
     }
-
-    /* Eingabefeld für den Benutzernamen */
-    input[type="text"] {
-        padding: 10px;
-        margin: 15px 0;
-        border: 1px solid #9f66d7; /* Rahmenfarbe */
-        border-radius: 5px;
-        background-color: #333; /* Hintergrundfarbe des Eingabefelds */
-        color: #ffffff; /* Textfarbe des Eingabefelds */
-        font-size: 1.2em; /* Schriftgröße */
-        width: 80%; /* Breite des Eingabefelds */
-        max-width: 400px; /* Maximale Breite */
-        display: block; /* Block-Element für zentrierte Ausrichtung */
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Button zum Festlegen des Benutzernamens */
-    button {
-        background-color: #b380ff; /* Hintergrundfarbe des Buttons */
-        color: #ffffff; /* Textfarbe des Buttons */
-        border: none;
-        border-radius: 5px;
-        padding: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease; /* Übergang für Hover-Effekt */
-        font-size: 1.2em; /* Schriftgröße */
-        margin-top: 15px; /* Abstand nach oben */
-        width: 80%; /* Breite des Buttons */
-        max-width: 400px; /* Maximale Breite */
-        display: block; /* Block-Element für zentrierte Ausrichtung */
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    button:hover {
-        background-color: #9f66d7; /* Farbe beim Hover */
-    }
-
-    /* Einheitliche Container-Styles */
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #1e1e1e; /* Hintergrundfarbe des Containers */
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schatten */
-        text-align: center; /* Zentrierter Text */
-    }
-
 }
