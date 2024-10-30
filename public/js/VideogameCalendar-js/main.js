@@ -81,25 +81,6 @@ function onSignIn(googleUser) {
         console.error('Fehler beim Fetch:', error);
     });
 }
-// Initialisierung von gapi
-window.onload = function() {
-    gapi.load('auth2', function() {
-        gapi.auth2.init({
-            client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com',
-        }).then(() => {
-            const googleLoginButton = document.querySelector('.g_id_signin');
-            if (googleLoginButton) {
-                googleLoginButton.addEventListener('click', function() {
-                    gapi.auth2.getAuthInstance().signIn().then(onSignIn).catch(error => {
-                        console.error('Error during sign in:', error);
-                    });
-                });
-            } else {
-                console.error('Google Login Button nicht gefunden.');
-            }
-        });
-    });
-}
 
 // Ereignis-Listener für Google Login Button
 document.addEventListener('DOMContentLoaded', () => {
