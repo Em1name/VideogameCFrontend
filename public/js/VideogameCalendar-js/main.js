@@ -41,12 +41,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Google Login Callback
 function onLoad() {
-    gapi.load('auth2', function() {
-        gapi.auth2.init({
-            client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com',
+    // Überprüfen, ob gapi existiert, um sicherzustellen, dass die Google API nur einmal geladen wird
+    if (typeof gapi !== 'undefined') {
+        gapi.load('auth2', function() {
+            gapi.auth2.init({
+                client_id: '495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com',
+            }).then(() => {
+                // Hier den Login-Button mit der Authentifizierung verbinden
+                const googleLoginButton = document.querySelector('.g_id_signin');
+                if (googleLoginButton) {
+                    googleLoginButton.addEventListener('click', function() {
+                        const authInstance = gapi.auth2.getAuthInstance();
+                        authInstance.signIn().then(onSignIn).catch(error => {
+                            console.error('Error during sign in:', error);
+                        });
+                    });
+                } else {
+                    console.error('Google Login Button nicht gefunden.');
+                }
+            });
         });
-    });
+    } else {
+        console.error('Google API nicht verfügbar');
+    }
 }
+
+// Das onLoad Ereignis bei Fensterladung verknüpfen
+window.onload = onLoad;
+
 
 // Funktion zum Einloggen mit Google
 function onSignIn(googleUser) {
