@@ -18,18 +18,18 @@
         <div id="g_id_onload" data-client_id="495089736315-cctdkib2v9sav9t0k7qv1mvestilf443.apps.googleusercontent.com" data-callback="handleCredentialResponse"></div>
         <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
     </div>
+
+    <form id="postForm">
+        <input type="text" id="post-title" required placeholder="Titel">
+        <textarea id="post-content" required placeholder="Inhalt"></textarea>
+        <input type="text" id="platform" required placeholder="Plattform">
+        <input type="text" id="genre" required placeholder="Genre">
+        <button type="submit">Beitrag erstellen</button>
+    </form>
+
+    <input type="text" id="username" placeholder="Benutzername">
+    <button id="set-username">Benutzernamen festlegen</button>
 </main>
-
 <script type="module" src="./public/js/VideogameCalendar-js/main.js" defer></script>
-
-<script>
-    // Sicherstellen, dass handleCredentialResponse definiert ist
-    function handleCredentialResponse(response) {
-        const id_token = response.credential;
-        console.log("ID Token:", id_token);
-        // Hier kannst du den Token an deinen Server senden
-        sendTokenToServer(id_token);
-    }
-</script>
 </body>
 </html>
