@@ -1,4 +1,4 @@
-import { setUsername, createPost, fetchPosts, checkAuthStatus, uploadProfilePicture } from './api.js';
+import {  checkAuthStatus, uploadProfilePicture } from './api.js';
 
 // Funktion zum Senden des Tokens an den Server
 async function sendTokenToServer(id_token) {
