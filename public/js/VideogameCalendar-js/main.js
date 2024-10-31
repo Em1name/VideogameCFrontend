@@ -27,6 +27,15 @@ async function sendTokenToServer(id_token) {
     }
 }
 
+// Funktion, die nach erfolgreichem Login aufgerufen wird
+async function onSignIn(googleUser) {
+    const id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token:", id_token);
+
+    // Token an den Server senden
+    await sendTokenToServer(id_token);
+}
+
 // Google Login Callback
 function onLoad() {
     if (!window.gapi) {
@@ -58,29 +67,23 @@ function handleGoogleSignIn() {
     });
 }
 
-// Funktion, die nach erfolgreichem Login aufgerufen wird
-async function onSignIn(googleUser) {
-    const id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token:", id_token);
-
-    // Token an den Server senden
-    await sendTokenToServer(id_token);
-}
-
 // Funktion zum Erstellen eines neuen Beitrags
 async function handleCreatePost() {
     const title = document.getElementById('post-title').value.trim();
     const content = document.getElementById('post-content').value.trim();
     const platform = document.getElementById('platform').value.trim();
     const genre = document.getElementById('genre').value.trim();
+    const location = document.getElementById('location').value.trim();
+    const startDateTime = document.getElementById('startDateTime').value.trim();
+    const endDateTime = document.getElementById('endDateTime').value.trim();
     const releaseDate = new Date().toISOString();
 
-    if (!title || !content || !platform || !genre) {
+    if (!title || !content || !platform || !genre || !location || !startDateTime || !endDateTime) {
         alert("Bitte fülle alle erforderlichen Felder aus.");
         return;
     }
 
-    const newPost = { title, content, platform, genre, releaseDate };
+    const newPost = { title, content, platform, genre, location, startDateTime, endDateTime, releaseDate };
 
     try {
         const result = await createPost(newPost);
