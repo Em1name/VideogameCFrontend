@@ -3,7 +3,7 @@ import {  checkAuthStatus, uploadProfilePicture } from './api.js';
 // Funktion zum Senden des Tokens an den Server
 async function sendTokenToServer(id_token) {
     try {
-        const response = await fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
+        const response = await fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google/callback', { // Pass auf den Endpunkt auf
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,12 +20,13 @@ async function sendTokenToServer(id_token) {
 
         // Optional: Hier kannst du die nächste Aktion durchführen, z.B. Weiterleitung
         if (data.redirect) {
-            window.location.href = data.redirect;
+            window.location.href = data.redirect; // Redirect to the received URL
         }
     } catch (error) {
         console.error('Fehler beim Senden des Tokens:', error);
     }
 }
+
 
 // Funktion, die nach erfolgreichem Login aufgerufen wird
 async function onSignIn(googleUser) {
