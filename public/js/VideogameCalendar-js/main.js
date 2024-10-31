@@ -112,25 +112,3 @@ async function handleSetUsername() {
         alert("Fehler beim Festlegen des Benutzernamens. Bitte versuche es erneut.");
     }
 }
-
-// Haupt-Event-Listener für DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    onLoad();
-
-    const postForm = document.getElementById('postForm');
-    if (postForm) {
-        postForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Verhindert das Standardverhalten
-            handleCreatePost();
-        });
-    } else {
-        console.error('Element mit ID "postForm" nicht gefunden.');
-    }
-
-    const setUsernameButton = document.getElementById('set-username');
-    if (setUsernameButton) {
-        setUsernameButton.addEventListener('click', handleSetUsername);
-    } else {
-        console.error("Element mit der ID 'set-username' nicht gefunden.");
-    }
-});
