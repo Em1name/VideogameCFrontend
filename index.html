@@ -40,6 +40,7 @@ async function sendTokenToServer(id_token) {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({ id_token }) // ID Token im JSON-Format senden
         });
 
