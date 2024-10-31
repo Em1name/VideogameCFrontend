@@ -1,7 +1,5 @@
 import { setUsername, createPost, fetchPosts, checkAuthStatus, uploadProfilePicture } from './api.js';
 
-import { setUsername, createPost, fetchPosts, checkAuthStatus, uploadProfilePicture } from './api.js';
-
 // Funktion zum Senden des Tokens an den Server
 async function sendTokenToServer(id_token) {
     try {
@@ -27,15 +25,6 @@ async function sendTokenToServer(id_token) {
     } catch (error) {
         console.error('Fehler beim Senden des Tokens:', error);
     }
-}
-
-// Funktion, die nach erfolgreichem Login aufgerufen wird
-async function onSignIn(googleUser) {
-    const id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token:", id_token);
-
-    // Token an den Server senden
-    await sendTokenToServer(id_token);
 }
 
 // Google Login Callback
@@ -73,6 +62,8 @@ function handleGoogleSignIn() {
 async function onSignIn(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token:", id_token);
+
+    // Token an den Server senden
     await sendTokenToServer(id_token);
 }
 
