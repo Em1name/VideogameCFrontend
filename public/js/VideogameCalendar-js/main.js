@@ -1,5 +1,15 @@
 import {  checkAuthStatus, uploadProfilePicture } from './api.js';
 
+
+ // Sicherstellen, dass handleCredentialResponse definiert ist
+  function handleCredentialResponse(response) {
+        const id_token = response.credential;
+        console.log("ID Token:", id_token);
+        // Hier kannst du den Token an deinen Server senden
+        console.log(typeof sendTokenToServer); // sollte 'function' zurückgeben
+        sendTokenToServer(id_token);
+    }
+
 // Funktion zum Senden des Tokens an den Server
 async function sendTokenToServer(id_token) {
     try {
