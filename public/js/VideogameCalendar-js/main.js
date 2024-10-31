@@ -1,5 +1,43 @@
 import { setUsername, createPost, fetchPosts, checkAuthStatus, uploadProfilePicture } from './api.js';
 
+import { setUsername, createPost, fetchPosts, checkAuthStatus, uploadProfilePicture } from './api.js';
+
+// Funktion zum Senden des Tokens an den Server
+async function sendTokenToServer(id_token) {
+    try {
+        const response = await fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id_token }) // ID Token im JSON-Format senden
+        });
+
+        if (!response.ok) {
+            throw new Error('Fehler beim Senden des Tokens: ' + response.statusText);
+        }
+
+        const data = await response.json();
+        console.log('Serverantwort:', data);
+
+        // Optional: Hier kannst du die nächste Aktion durchführen, z.B. Weiterleitung
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        }
+    } catch (error) {
+        console.error('Fehler beim Senden des Tokens:', error);
+    }
+}
+
+// Funktion, die nach erfolgreichem Login aufgerufen wird
+async function onSignIn(googleUser) {
+    const id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token:", id_token);
+
+    // Token an den Server senden
+    await sendTokenToServer(id_token);
+}
+
 // Google Login Callback
 function onLoad() {
     if (!window.gapi) {
@@ -36,33 +74,6 @@ async function onSignIn(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token:", id_token);
     await sendTokenToServer(id_token);
-}
-
-// Funktion, um den Token an den Server zu senden
-async function sendTokenToServer(id_token) {
-    try {
-        const response = await fetch('https://videogamecalendarmbackend.apps.01.cf.eu01.stackit.cloud/api/auth/google', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id_token }) // ID Token im JSON-Format senden
-        });
-
-        if (!response.ok) {
-            throw new Error('Fehler beim Senden des Tokens: ' + response.statusText);
-        }
-
-        const data = await response.json();
-        console.log('Serverantwort:', data);
-
-        // Optional: Hier kannst du die nächste Aktion durchführen, z.B. Weiterleitung
-        if (data.redirect) {
-            window.location.href = data.redirect;
-        }
-    } catch (error) {
-        console.error('Fehler beim Senden des Tokens:', error);
-    }
 }
 
 // Funktion zum Erstellen eines neuen Beitrags
